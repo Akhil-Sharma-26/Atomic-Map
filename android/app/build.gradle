@@ -1,9 +1,17 @@
+buildscript {
+    dependencies {
+        classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
+    }
+}
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
 }
+
+apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file("local.properties")
@@ -12,6 +20,8 @@ if (localPropertiesFile.exists()) {
         localProperties.load(reader)
     }
 }
+
+def apiKey = localProperties['apiKey'] ?: "Unknown"  
 
 def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
 if (flutterVersionCode == null) {
@@ -24,6 +34,7 @@ if (flutterVersionName == null) {
 }
 
 android {
+
     namespace = "com.example.myapp"
     compileSdk = 34
     ndkVersion = flutter.ndkVersion
@@ -32,7 +43,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
+    
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.myapp"
@@ -42,6 +53,7 @@ android {
         targetSdk = 33
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
+        manifestPlaceholders += [apiKey: apiKey] // The Problem I was facign was that I was doing '=' , but I was supposed to concatinate to the manifestPlaceholders array.
     }
 
     buildTypes {
