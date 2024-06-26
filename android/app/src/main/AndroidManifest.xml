@@ -5,9 +5,9 @@
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
         <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
-        android:label="myapp"
+        android:label="Atomic Maps"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/map">
         <!-- TODO: Add your Google Maps API key here -->
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyCDaaPgUs5ezknYi1rIcpWSNPFxZ-_mEaA"/>
