@@ -103,25 +103,31 @@ Future<void> _loadMarkers() async {
   final prefs = await SharedPreferences.getInstance();
   final markersData = prefs.getStringList('markers') ?? [];
   setState(() {
-    _markers.clear(); // for clearing the markers because we are adding new ones
+    _markers.clear(); // Clear existing markers before adding new ones
 
-
-    // I was getting the error in loading markers because the data is not in the correct format. The data was in LatLng and I was directly converting into doubles.
     for (String it in markersData) {
       final data = it.split(',');
-      if (data.length >= 4) { 
+      if (data.length >= 4) {
         try {
-          final double lat = double.parse(data[0]);
-          final double lng = double.parse(data[1]);
+          final double lat = double.tryParse(data[0]) ?? 0.0;
+          final double lng = double.tryParse(data[1]) ?? 0.0;
           final String title = data[2];
           final String details = data[3];
-          final marker = Marker(
-            markerId: MarkerId('$lat,$lng'),
-            position: LatLng(lat, lng),
-            infoWindow: InfoWindow(title: title, snippet: details),
-            icon: BitmapDescriptor.defaultMarker,
-          );
-          _markers.add(marker);
+
+          // Only add the marker if both latitude and longitude are valid doubles
+          if (lat != 0.0 && lng != 0.0) {
+            final marker = Marker(
+              markerId: MarkerId('$lat,$lng'),
+              position: LatLng(lat, lng),
+              infoWindow: InfoWindow(title: title, snippet: details),
+              icon: BitmapDescriptor.defaultMarker,
+            );
+            _markers.add(marker);
+          } else {
+            if (kDebugMode) {
+              print("Invalid marker data: $it");
+            }
+          }
         } catch (e) {
           if (kDebugMode) {
             print("Error parsing marker data: $e");
@@ -182,3 +188,6 @@ Future<void> _loadMarkers() async {
     );
   }
 }
+
+
+// The Secret-gradle was not working, it was just because I put the local.properties files at wrong place.

@@ -21,7 +21,7 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-def apiKey = localProperties['apiKey'] ?: "Unknown"  
+def apiKeys = localProperties['apiKeys'] ?: "unknown12"
 
 def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
 if (flutterVersionCode == null) {
@@ -53,7 +53,7 @@ android {
         targetSdk = 33
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
-        manifestPlaceholders += [apiKey: apiKey] // The Problem I was facign was that I was doing '=' , but I was supposed to concatinate to the manifestPlaceholders array.
+        manifestPlaceholders += [apiKeys: apiKeys] // The Problem I was facign was that I was doing '=' , but I was supposed to concatinate to the manifestPlaceholders array.
     }
 
     buildTypes {
