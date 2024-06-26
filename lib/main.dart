@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -87,11 +88,8 @@ Future<void> _addMarkerWithDetails(LatLng position) async {
               // Save to local storage
               final String markerData = '${position.latitude},${position.longitude},$title,$details';
               final List<String> markersData = prefs.getStringList('markers') ?? [];
-              print("Saving marker data: $markerData");
               markersData.add(markerData);
               await prefs.setStringList('markers', markersData);
-              final List<String>? debugMarkersData = prefs.getStringList('markers');
-              print("Markers data after saving: $debugMarkersData");
               Navigator.of(context).pop();
             },
           ),
@@ -125,8 +123,9 @@ Future<void> _loadMarkers() async {
           );
           _markers.add(marker);
         } catch (e) {
-          // Handle or log error
-          print("Error parsing marker data: $e");
+          if (kDebugMode) {
+            print("Error parsing marker data: $e");
+          }
         }
       }
     }
