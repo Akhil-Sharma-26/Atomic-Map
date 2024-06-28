@@ -1,16 +1,10 @@
-# myapp
+# Atomic-Maps
 
-A new Flutter project.
+- A Maps project that helps the user mark locations and save them for future reference.
+- This uses the Google Maps API to get the map data and then shared_preference to store them according to the platform.
 
-## Getting Started
+## How to use:
+- You can directly install the app from the releases section and start using it.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Future Goals:
+- Connect Firebase to it.
